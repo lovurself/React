@@ -22,17 +22,21 @@ function App() {
     {
       id: 1,
       username: "jully",
-      email: "jully@example.com"
+      email: "jully@example.com",
+      active: true
     },
     {
       id: 2,
       username: "poter",
-      email: "poter@example.com"
+      email: "poter@example.com",
+      active: false
+
     },
     {
       id: 3,
       username: "json",
-      email: "json@example.com"
+      email: "json@example.com",
+      active: false
     }
   ]);
   const nextId = useRef(4);
@@ -62,6 +66,17 @@ function App() {
     // 각 객체를 확인해서 객체의 id와 파라미터로 가져온 id가 같이 않으면 추출하여 새로운 배열에 넣겠다.
   };
 
+  const onToggle = (id) => {
+    setUsers(users.map(
+      user => user.id === id 
+        ? { ...user, active: !user.active }
+        : user
+    ));
+    // 조건이 맞는다면 active의 반대가 호출될 것
+    // 배열 안에 있는 원소를 수정하기 위해서는 map 함수 사용
+    // 특정 객체를 업데이트해야 할 때도 map 함수를 사용하여 새로운 배열에 기존 배열을 가져온 후 특정 값을 덮어씌우는 방식
+  };
+
   return (
     <>
       <CreateUser
@@ -73,6 +88,7 @@ function App() {
       <UserList
         users={users}
         onRemove={onRemove}
+        onToggle={onToggle}
       />
     </>
   );
