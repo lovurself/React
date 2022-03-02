@@ -57,6 +57,11 @@ function App() {
   // useRef를 사용해서 값이 바뀌어도 컴포넌트는 리렌더링되지 않게
   // 값은 그대로 계속 기억됨
 
+  const onRemove = (id) => {
+    setUsers(users.filter(user => user.id !== id));
+    // 각 객체를 확인해서 객체의 id와 파라미터로 가져온 id가 같이 않으면 추출하여 새로운 배열에 넣겠다.
+  };
+
   return (
     <>
       <CreateUser
@@ -65,7 +70,10 @@ function App() {
         onChange={onChange}
         onCreate={onCreate}
       />
-      <UserList users={users} />
+      <UserList
+        users={users}
+        onRemove={onRemove}
+      />
     </>
   );
 }
