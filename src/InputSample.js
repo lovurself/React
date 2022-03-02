@@ -1,18 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 function InputSample() {
     const [inputs, setInputs] = useState({
         name: '',
         nickname: ''
     });
-    {/* 객체 형태의 useState를 관리 */}
+    // 객체 형태의 useState를 관리
+
+    const nameInput = useRef();
+    // React 자체에는 focus를 이동시켜 줄 수 없음
+    // 그래서 DOM에 직접 접근하여서 해결
+    // useRef는 React Hook 함수 중 하나(자세한 사항은 notion 참고)
+
 
     const { name, nickname } = inputs;
-    {/* 사용하기 쉽게 비구조화 할당을 해줌 */}
+    // 사용하기 쉽게 비구조화 할당을 해줌
 
     const onChange = (e) => {
         const { name, value } = e.target;
-        {/* e.target을 여러번 누르지 않기 위해 비구조화 할당을 해줌 */}
+        // e.target을 여러번 누르지 않기 위해 비구조화 할당을 해줌
 
         // const nextInputs = {
         //     ...inputs
@@ -36,6 +42,9 @@ function InputSample() {
             name: '',
             nickname: ''
         });
+        nameInput.current.focus();
+        // nameInput.current는 선택한 DOM(name input)을 가리키는것
+        // focus는 DOM의 API
     }
 
     return (
@@ -45,6 +54,8 @@ function InputSample() {
                 placeholder='이름'
                 onChange={onChange}
                 value={name}
+                ref={nameInput}
+                // 선택하고 싶은 DOM에 입력해줌
             />
             <input
                 name='nickname'
